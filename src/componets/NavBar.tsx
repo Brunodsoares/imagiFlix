@@ -1,5 +1,11 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import logo from "../assets/logo-imagiflix.png";
 import placeholderUser from "../assets/user.png";
+import {
+  faMagnifyingGlass,
+  faCaretDown,
+} from "@fortawesome/free-solid-svg-icons";
 
 const NavBar = () => (
   <nav className="absolute top-0 left-0 grid grid-cols-2 items-center w-full p-8">
@@ -18,17 +24,21 @@ const NavBar = () => (
       </ul>
     </div>
 
-    <div className="justify-self-end grid grid-cols-2 justify-items-end items-center">
-      <form>
-        <input type="text" placeholder="Titulos, gente e gênero" />
-        <button>
-          <i></i>
+    <div className="justify-self-end flex justify-items-end items-center">
+      <form className="relative w-64">
+        <input
+          className="w-full border rounded bg-black py-1 px-3 transition-all duration-300 ease-in-out opacity-0 hover:opacity-100 focus:opacity-100"
+          type="text"
+          placeholder="Titulos, gente e gênero"
+        />
+        <button className="absolute right-0 py-1 px-2">
+          <FontAwesomeIcon icon={faMagnifyingGlass} />
         </button>
       </form>
-      <div className="flex">
+      <div className="flex ml-4">
         <img src={placeholderUser} alt="foto de usuário" />
         <button>
-          <i></i>
+          <FontAwesomeIcon className="ml-2" icon={faCaretDown} />
         </button>
         <ul className="hidden">
           <li>
