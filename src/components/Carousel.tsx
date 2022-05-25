@@ -1,24 +1,26 @@
+import { title } from "process";
 import Slick from "react-slick";
-
-
 import mockData from "../data/mock";
 
-const Carousel = ({ data = mockData }) => {
+const Poster = ({ cover, title }: { cover: string; title: string }) => (
+  <article>
+    <img src={cover} alt={title} />
+  </article>
+);
+
+const Carousel = ({ title = 'Filmes em destaque' , data = mockData }) => {
 
   const options = {
     infinite: true,
-    slidesToShow: 9,
     slidesToScroll: 1,
+    variableWidth: true,
   };
 
   return (
-    <Slick {...options}> 
-      {data.map(({ cover, title }) => ( 
-        <article>
-          <img src={cover} alt={title} />
-        </article>
-       ))}
-    </Slick>
+    <section>
+      <h2>{title}</h2>
+      <Slick {...options}>{data.map((movie) => Poster(movie))}</Slick>
+    </section>
   );
 };
 
