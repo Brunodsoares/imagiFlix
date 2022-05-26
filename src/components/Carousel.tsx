@@ -1,14 +1,20 @@
 import { title } from "process";
 import Slick from "react-slick";
-import mockData from "../data/mock";
 
-const Poster = ({ cover, title }: { cover: string; title: string }) => (
-  <article>
+import mockData, { Movie } from "../data/mock";
+
+const Poster = ({ cover, title, score}: Movie, index:number) => (
+  <article key={index}>
     <img src={cover} alt={title} />
   </article>
 );
 
-const Carousel = ({ title = 'Filmes em destaque' , data = mockData }) => {
+interface CarouselData {
+  title?: string,
+  data?: Movie[],
+}
+
+const Carousel = ({ title = 'Filmes em destaque' , data = mockData }: CarouselData ) => {
 
   const options = {
     infinite: true,
@@ -19,7 +25,7 @@ const Carousel = ({ title = 'Filmes em destaque' , data = mockData }) => {
   return (
     <section>
       <h2>{title}</h2>
-      <Slick {...options}>{data.map((movie) => Poster(movie))}</Slick>
+      <Slick {...options}>{data.map((movie, index) => Poster(movie, index))}</Slick>
     </section>
   );
 };
