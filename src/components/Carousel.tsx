@@ -7,7 +7,9 @@ import {
 
 import mockData, { Movie } from "../data/mock";
 
-import Poster from './Poster';
+import Poster from "./Poster";
+
+import "./Carousel.css";
 
 interface CarouselData {
   title?: string;
@@ -53,8 +55,8 @@ const Carousel = ({
   };
 
   return (
-    <section>
-      <h2 className="relative z-10 text-xl ml-8 mb-4 ">{title}</h2>
+    <section className="carousel">
+      <h2 className="relative z-10 text-xl ml-8 ">{title}</h2>
       <Slick className="relative mb-8" {...options}>
         {data.map((movie, index) => Poster(movie, index))}
       </Slick>
