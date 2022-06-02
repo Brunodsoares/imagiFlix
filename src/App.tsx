@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import CONST from './data/contants';
+import CONST from "./data/contants";
 
 import Hero from "./components/Hero";
 import NavBar from "./components/NavBar";
@@ -13,28 +13,41 @@ const App = () => {
   const { URL, APISTRING } = CONST;
 
   const [ movies, setMovies ] = useState();
-
+  const [ series, setSeries ] = useState();
+  
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${URL}/discover/movie${APISTRING}&sort_by=popularity.desc`);
+      const movies = await fetch(`${URL}/discover/movie${APISTRING}&sort_by=popularity.desc`);
+      const moviesData = await movies.json();
+      setMovies(moviesData);
 
-      const data = await response.json();
+      const series = await fetch(`${URL}/discover/tv${APISTRING}&sort_by=popularity.desc`);
+      const seriesData = await series.json();
+      setSeries(seriesData);
+    };
 
-      setMovies(data);      
-    }
- 
     fetchData();
   }, []);
 
-// useEffect(() => movies && console.log(movies), [ movies ])
+  // useEffect(() => movies && console.log(movies), [ movies ])
+
+  const getFeaturedMovie = () => movies && movies?.results[0];
+
+  const getMovieList = () => {
+    if (movies) {
+      const [ featured, ...movieList ] = movies?.results;
+      return movieList;
+    }
+    return [];
+  };
 
   return (
     <div className="m-auto  antialised font-sans bg-black text-white">
-      <Hero {...movies?.results[0]}/>
+      <Hero {...getFeaturedMovie()} />
       <NavBar />
-      <Carousel />
-      <Carousel />
-      <Carousel />
+      <Carousel title="Filmes Populares" data={getMovieList()} />
+      <Carousel title="Séries Populares" data={series?.results} />
+      <Carousel title="Placeholder" />
     </div>
   );
 };
