@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 import CONST from "./data/contants";
 
+import Loading from "./components/Loading";
 import Hero from "./components/Hero";
 import NavBar from "./components/NavBar";
 import Carousel from "./components/Carousel";
@@ -13,23 +14,27 @@ import "slick-carousel/slick/slick-theme.css";
 const App = () => {
   const { URL, APISTRING } = CONST;
 
-  const [ movies, setMovies ] = useState();
-  const [ series, setSeries ] = useState();
-  const [ loading, setLoading ] = useState(true);
-  
+  const [movies, setMovies] = useState();
+  const [series, setSeries] = useState();
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchData = async () => {
-      const movies = await fetch(`${URL}/discover/movie${APISTRING}&sort_by=popularity.desc`);
+      const movies = await fetch(
+        `${URL}/discover/movie${APISTRING}&sort_by=popularity.desc`
+      );
       const moviesData = await movies.json();
       setMovies(moviesData);
 
-      const series = await fetch(`${URL}/discover/tv${APISTRING}&sort_by=popularity.desc`);
+      const series = await fetch(
+        `${URL}/discover/tv${APISTRING}&sort_by=popularity.desc`
+      );
       const seriesData = await series.json();
       setSeries(seriesData);
-      
+
       setLoading(false);
     };
-    
+
     fetchData();
   }, []);
 
@@ -39,7 +44,7 @@ const App = () => {
 
   const getMovieList = () => {
     if (movies) {
-      const [ featured, ...movieList ] = movies?.results;
+      const [featured, ...movieList] = movies?.results;
       return movieList;
     }
     return [];
@@ -47,17 +52,24 @@ const App = () => {
 
   return (
     <div className="m-auto  antialised font-sans bg-black text-white">
-      {loading && <h1>LOADING</h1>}
-      {!loading && (
+      {loading && (
         <>
-          <Hero {...getFeaturedMovie()} />
+          <Loading />
           <NavBar />
-          <Carousel title="Filmes Populares" data={getMovieList()} />
-          <Carousel title="Séries Populares" data={series?.results} />
-          <Carousel title="Placeholder" />
-          <Footer />
         </>
       )}
+      {
+        !loading && (
+          <>
+            <Hero {...getFeaturedMovie()} />
+            <NavBar />
+            <Carousel title="Filmes Populares" data={getMovieList()} />
+            <Carousel title="Séries Populares" data={series?.results} />
+            <Carousel title="Placeholder" />
+          </>
+        )
+      }
+      <Footer />
     </div>
   );
 };
