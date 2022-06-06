@@ -18,7 +18,7 @@ interface CarouselData {
 
 const Carousel = ({
   title = "Filmes em destaque",
-  data = mockData,
+  data = mockData
 }: CarouselData) => {
   enum Direction {
     left,
