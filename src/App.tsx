@@ -42,9 +42,11 @@ const App = () => {
   };
 
   const getTitle = async ({ type, id }: Title) => {
+    setLoading(true)
     const title = await fetch(`${URL}/${type}/${id}${APISTRING}`);
     const titleData = await title.json();
     setTitle(titleData);
+    setLoading(false)
   };
 
   useEffect(() => {
@@ -69,7 +71,7 @@ const App = () => {
     fetchData();
   }, [URL, APISTRING]);
 
- useEffect(() => title && console.log(title), [ title ])
+
 
   return (
     <div className="m-auto  antialised font-sans bg-black text-white">
@@ -89,7 +91,7 @@ const App = () => {
         </>
       )}
       <Footer />
-      <Modal /> 
+      {!loading && title && <Modal {...title} />} 
     </div>
   );
 };
