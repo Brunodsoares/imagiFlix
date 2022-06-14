@@ -1,5 +1,5 @@
 const Loading = () => (
-  <div className="w-full h-screen bg-black grid place-items-center">
+  <div className="w-full h-screen fixed top-0 left-0 bg-black grid place-items-center">
     <svg
       style={{
         margin: "auto",

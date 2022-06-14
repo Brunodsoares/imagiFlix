@@ -51,6 +51,7 @@ const App = () => {
 
   useEffect(() => {
     emitter.addListener(CONST.EVENTS.PosterClick, getTitle);
+    emitter.addListener(CONST.EVENTS.ModalClose, () => setTitle(false));
 
     const fetchData = async () => {
       const movies = await fetch(
@@ -87,7 +88,7 @@ const App = () => {
           <NavBar />
           <Carousel title="Filmes Populares" data={getMovieList()} />
           <Carousel title="Séries Populares" data={series?.results} />
-          <Carousel title="Placeholder" />
+          <Carousel title="Séries Populares" data={series?.results} />
         </>
       )}
       <Footer />
